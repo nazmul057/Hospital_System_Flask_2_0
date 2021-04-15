@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Admins
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    {% if allData != [] %}
+        <table class="table table-bordered table-striped table-dark table-responsive-md">
+            <thead>
+                <tr>
+                    <th scope="col">Serial</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">View</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user, admin in allData %}
+                <tr>
+                    <th scope="row">{{ loop.index + refCount }}</th>
+                    <td>{{ admin.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ admin.name }}</td>
+                    <td><a class="btn btn-info hoverEffect"
+                        href="{{ url_for('admin.particularUserInfo',
+                        userType=user.userType,
+                        storedName=admin.adminIdEncrypted) }}">See Info</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>No admin found.</h3>
+    {% endif %}
+
+    {% for page_num in admins.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+      {% if page_num %}
+        {% if admins.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('admin.allAdmins', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('admin.allAdmins', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+
+{% endblock content %}

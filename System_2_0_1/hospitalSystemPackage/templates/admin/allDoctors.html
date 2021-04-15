@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Doctors
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    {% if allData != [] %}
+        <table class="table table-bordered table-striped table-dark table-responsive-md">
+            <thead>
+                <tr>
+                    <th scope="col">Serial</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user, doctor in allData %}
+                <tr>
+                    <th scope="row">{{ loop.index + refCount }}</th>
+                    <td>{{ doctor.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ doctor.name }}</td>
+                    <td><a class="btn btn-info hoverEffect"
+                        href="{{ url_for('admin.particularUserInfo', userType=user.userType, storedName=doctor.doctorIdEncrypted) }}">See Info</a></td>
+                    <td><a class="btn btn-danger hoverEffect"
+                        href="{{ url_for('admin.deleteUserConfirmation',
+                            userType=user.userType,
+                            storedName=doctor.doctorIdEncrypted,
+                            fromPage=fromPage,
+                            itemNumber=loop.index) }}">Delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>No Doctor Found</h3>
+    {% endif %}
+
+    {% for page_num in doctors.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+      {% if page_num %}
+        {% if doctors.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('admin.allDoctors', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('admin.allDoctors', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+
+{% endblock content %}

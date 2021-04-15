@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Users
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md">
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                    <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                       href="{{ url_for('admin.allPatients') }}">Patients</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                    <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                       href="{{ url_for('admin.allHospitalStaff') }}">Hospital Staff</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                    <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                       href="{{ url_for('admin.allDoctors') }}">Doctors</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                   <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                      href="{{ url_for('admin.allAdmins') }}">Admins</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                    <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                       href="{{ url_for('admin.searchPatient') }}">Search Patients</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                    <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                       href="{{ url_for('admin.searchHospitalStaff') }}">Search Hospital Staff</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="margin-bottom: 10px;">
+                    <a class="btn btn-outline-info hoverEffect container-fluid mb-4"
+                       href="{{ url_for('admin.searchDoctor') }}">Search Doctors</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Usable Space
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <p class="lead">Current Valid Space is: {{ currentSpace }}</p>
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Usable Space</legend>
+            <div class="form-group">
+                {{ form.space.label(class="form-control-label") }}
+                {% if form.space.errors %}
+                    {{ form.space(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.space.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.space(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+    </form>
+    <hr>
+{% endblock content %}

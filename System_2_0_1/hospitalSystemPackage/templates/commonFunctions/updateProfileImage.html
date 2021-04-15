@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Change Profile Picture
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Change Profile Picture</legend>
+
+            <div class="form-group">
+                {{ form.profileImage.label(class="form-control-label") }}
+                {% if form.profileImage.errors %}
+                    {{ form.profileImage(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.profileImage.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.profileImage(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+    </form>
+    <div class="form-group">
+        <a href="{{ url_for('commonFunctions.deleteProfileImage') }}"
+           class="btn btn-outline-info"
+           role="button"
+           aria-pressed="true">Delete Profile Picture</a>
+    </div>
+    <hr>
+{% endblock content %}

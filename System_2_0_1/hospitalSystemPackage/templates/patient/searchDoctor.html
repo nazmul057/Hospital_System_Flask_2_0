@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Search Doctor
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Search Doctor</legend>
+            <div class="form-group">
+                {{ form.searchBy.label(class="form-control-label") }}
+                {% if form.searchBy.errors %}
+                    {{ form.searchBy(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.searchBy.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.searchBy(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.searchName.label(class="form-control-label") }}
+                {% if form.searchName.errors %}
+                    {{ form.searchName(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.searchName.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.searchName(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+    </form>
+    <hr>
+
+    {% if allData == [] %}
+        <h4 class="text-muted">No Doctor Found</h4>
+    {% else %}
+        <h3 class="text-primary mb-3">Results</h3>
+        {% for profileImage, doctor in allData %}
+            <div class="content-section mb-4 border-bottom">
+                <div class="media">
+                    <a href="{{ url_for('commonFunctions.showProfileImage', fileName = profileImage) }}">
+                        <img class="rounded" src="{{ url_for('commonFunctions.showProfileImage', fileName = profileImage) }}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="account-heading mb-1" style="margin-left: 30px"> Username: {{ doctor.username }}</h4>
+                        <p class="text-secondary mb-1" style="margin-left: 30px">Name: {{ doctor.name }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% endblock content %}

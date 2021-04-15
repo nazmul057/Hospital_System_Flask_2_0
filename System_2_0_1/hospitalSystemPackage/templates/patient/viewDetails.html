@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Document Details
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <blockquote class="blockquote">
+        <h4 class="text-primary mt-0 mb-0">Document of</h4>
+        <p class="mt-0 mb-0">Username: {{ patient.username }}</p>
+        <p class="mt-0 mb-2 border-bottom">Name: {{ patient.name }}</p>
+
+        <h4 class="text-primary mt-0 mb-0">Uploaded By</h4>
+        <p class="mt-0 mb-2 border-bottom">
+            {% if document.postedBy and document.postedBy == 'patient' %}
+                You
+            {% elif document.postedBy and document.postedBy == 'hospitalStaff' %}
+                Hospital
+            {% elif document.postedBy and document.postedBy == 'doctor' %}
+                Doctor
+            {% else %}
+                Unavailable
+            {% endif %}
+        </p>
+
+        <h4 class="text-primary mt-0 mb-0">Reference Doctor</h4>
+        {% if document.referenceDoctorName %}
+            <p class="mt-0 mb-2 border-bottom">{{ document.referenceDoctorName }}</p>
+        {% else %}
+            <p class="text-secondary mt-0 mb-2 border-bottom">None</p>
+        {% endif %}
+
+        <h4 class="text-primary mt-0 mb-0">File Size</h4>
+        <p class="mt-0 mb-2 border-bottom">{{ document.documentSize }}</p>
+
+        <p class="text-primary mt-0 mb-0">Posted</p>
+        <p class="mt-0 mb-3 border-bottom">{{ document.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</p>
+
+        <h4 class="text-primary mt-0 mb-0">Description</h4>
+        {% if document.description %}
+            <p class="mt-0 mb-2">{{ document.description }}</p>
+        {% else %}
+            <P class="mt-0 mb-2 text-muted">Unavailable</P>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-lg-3" style="margin-bottom: 10px;">
+                <a href="{{ url_for('patient.download', storedName=document.documentIdEncrypted) }}"
+                    style="margin-bottom: 20px;"
+                    class="btn btn-outline-info mb-0 container-fluid">Download</a>
+            </div>
+            <div class="col-lg-3" style="margin-bottom: 10px;">
+                <a href="{{ url_for('patient.connectDoctorDocument', storedName=document.documentIdEncrypted) }}"
+                    style="margin-bottom: 20px;"
+                    class="btn btn-outline-info mb-0 container-fluid">Connect Doctor</a>
+            </div>
+            <div class="col-lg-3" style="margin-bottom: 10px;">
+                <a href="{{ url_for('patient.disconnectDoctorDocument', storedName=document.documentIdEncrypted) }}"
+                    style="margin-bottom: 20px;"
+                    class="btn btn-outline-danger mb-0 container-fluid">Disconnect Doctor</a>
+            </div>
+            <div class="col-lg-3" style="margin-bottom: 10px;">
+                <a href="{{ url_for('patient.authorizedDocumentViewers', storedName=document.documentIdEncrypted) }}"
+                    style="margin-bottom: 20px;"
+                    class="btn btn-outline-info mb-0 container-fluid">Doctors who can see this</a>
+            </div>
+        </div>
+
+        {% if fExt == '.pdf' %}
+            <a href="{{ url_for('patient.seeFile', storedName=document.documentIdEncrypted) }}"
+               class="btn btn-outline-info" role="button"
+               style="margin-bottom: 20px;"
+               aria-pressed="true">View</a>
+            <iframe src="{{ url_for('patient.seeFile', storedName=document.documentIdEncrypted) }}" style="width: 100%;height: 700px;border: none;"></iframe>
+        {% else %}
+            <a href="{{ url_for('patient.seeFile', storedName=document.documentIdEncrypted) }}">
+                <img src="{{ url_for('patient.seeFile', storedName=document.documentIdEncrypted) }}" style="width: 100%;">
+            </a>
+        {% endif %}
+
+    </blockquote>
+
+{% endblock content %}

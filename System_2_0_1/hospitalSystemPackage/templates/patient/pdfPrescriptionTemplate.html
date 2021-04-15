@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    {% if title %}
+        <title>Hospital System - {{ title }}</title>
+    {% else %}
+        <title>Hospital System</title>
+    {% endif %}
+
+    <style>
+        .hoverEffect {transition: all .2s ease-in-out;}
+        .hoverEffect:hover {transform: scale(1.07);}
+
+        .hoverEffectLinks {transition: all .2s ease-in-out;}
+        .hoverEffectLinks:hover {transform: scale(1.1);}
+
+        /* .mynormal {color: white; background-color: gray; border-style: solid; margin-top: 5px;} */
+        .myNormalLink {color: white;}
+        /* .myNormalLink:active {background: yellow;} */
+        .myActiveLink {color: black;}
+
+        hr {
+            border: 1px solid red;
+            margin: 0;
+            padding: 0;
+        }
+        p, h2, h1 {
+            font-family: Helvetica, sans-serif;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="jumbotron jumbotron-fluid bg-info text-white">
+        <div class="container">
+            <div class="row">
+                <h2>Prescription</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container">
+
+        <div class="media">
+            <div class="media-body">
+                <article>
+                    <blockquote class="blockquote mb-0">
+                        <h4 class="text-primary mt-0 mb-0">Prescription of</h4>
+                        <p class="mt-0 mb-0">Username: {{ patient.username }}</p>
+                        <p class="mt-0 mb-2 border-bottom">Name: {{ patient.name }}</p>
+
+                        <h4 class="text-primary mt-0 mb-0">Prescription By</h4>
+                        <p class="mt-0 mb-2 border-bottom">{{ prescription.referenceDoctorName }}</p>
+
+                        <p class="text-primary mt-0 mb-0">Posted</p>
+                        <p class="mt-0 mb-2 border-bottom">{{ prescription.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</p>
+                    </blockquote>
+
+                    {% if prescription.description %}
+                        <h2 class="mt-4">{{ prescription.description }}</h2>
+                    {% else %}
+                        <h2 class="text-muted">Description Unavailable</h2>
+                    {% endif %}
+                    <p>{{ prescription.material }}</p>
+                </article>
+            </div>
+        </div>
+
+        <div style="width: fit-content; height: 300px;">
+            <!-- To make a gap vertically. -->
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid bg-info text-white text-center fint-weight-light">
+        <div class="container">
+            <p class="lead">...... Hospitals<br>
+                Address: ........................<br>
+                Contact: .........................
+            </p>
+            <hr>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

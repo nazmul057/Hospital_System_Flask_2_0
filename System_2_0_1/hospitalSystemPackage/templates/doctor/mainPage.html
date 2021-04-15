@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Patients
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <div class="row">
+        <div class="col-3" style="margin-bottom: 10px;">
+            <a href="{{ url_for('doctor.searchPatient') }}"
+               class="btn btn-outline-info hoverEffect container-fluid"
+               role="button"
+               aria-pressed="true">Search Patient</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" style="margin-bottom: 10px;">
+            <a href="{{ url_for('doctor.allPatients') }}"
+               class="btn btn-outline-info hoverEffect container-fluid"
+               role="button"
+               aria-pressed="true">All Patients</a>
+        </div>
+    </div>
+{% endblock content %}

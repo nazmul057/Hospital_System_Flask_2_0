@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Are You Sure...???
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <div class="d-flex justify-content-center" style="margin-bottom: 10px;">
+        <h1>Are You sure you want to delete Your Account?</h1>
+    </div>
+
+    <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+        <p class="lead">All your information will be removed.</p>
+    </div>
+
+    <div class="d-flex justify-content-around" style="margin-bottom: 20px;">
+        <a href="{{ url_for('hospitalStaff.deleteAccount') }}"
+           class="btn btn-outline-danger">Yes, I am Sure.</a>
+
+        <a  onclick="history.back(-1)"
+            class="btn btn-outline-info"
+            style="color: #00525c;">No, I have changed my mind.</a>
+    </div>
+    <hr>
+
+{% endblock content %}

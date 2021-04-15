@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block headScript %}
+    <script type="text/javascript">
+        function fileInfo(){
+
+            var spaceUsedInt = parseInt("{{ spaceUsed }}", 10);
+            var spaceTotal = parseInt("{{ spaceTotal }}", 10);
+            var fileInput = document.getElementById("file");
+
+            var files = fileInput.files;
+            var selectedFileSizeInt = parseInt(files[0].size, 10);
+
+            if ((spaceUsedInt + selectedFileSizeInt) < spaceTotal){
+                alert("Upload details: \n"
+                    + "Total Space = " + spaceTotal + " bytes\n"
+                    + "Space used = " + spaceUsedInt + " bytes"
+                    + "\nSelected file size = " + selectedFileSizeInt + " bytes"
+                );
+                return true;
+            }
+            else{
+                alert("Sorry, cannot upload this file\n"
+                    + "Total Space = " + spaceTotal + " bytes\n"
+                    + "Space used = " + spaceUsedInt + " bytes"
+                    + "\nSelected file size = " + selectedFileSizeInt + " bytes"
+                );
+                return false;
+            }
+        }
+    </script>
+{% endblock headScript %}
+
+{% block jumbotronUp %}
+    <h1>
+        Upload File
+    </h1>
+{% endblock jumbotronUp %}
+
+{% block content %}
+    <form method="POST" action="" enctype="multipart/form-data" onsubmit="return fileInfo();">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Upload File</legend>
+
+            <div class="form-group">
+                {{ form.description.label(class="form-control-label") }}
+                <small class="text-info">
+                        &nbsp;
+                        (Keep It Short)
+                </small>
+                {% if form.description.errors %}
+                    {{ form.description(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.description(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.file.label(class="form-control-label") }}
+                <small class="text-info">
+                        &nbsp;
+                        (Max Size 50 Mb)
+                </small>
+                {% if form.file.errors %}
+                    {{ form.file(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.file.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.file(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+    </form>
+    <hr>
+{% endblock content %}

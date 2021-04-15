@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Prescription
+    </h1>
+{% endblock jumbotronUp %}
+
+{% block content %}
+    <div class="media">
+        <div class="media-body">
+            <article>
+                <blockquote class="blockquote mb-0">
+                    <h4 class="text-primary mt-0 mb-0">Prescription of</h4>
+                    <p class="mt-0 mb-0">Username: {{ patient.username }}</p>
+                    <p class="mt-0 mb-2 border-bottom">Name: {{ patient.name }}</p>
+
+                    <h4 class="text-primary mt-0 mb-0">Prescription By</h4>
+                    <p class="mt-0 mb-2 border-bottom">{{ prescription.referenceDoctorName }}</p>
+
+                    <p class="text-primary mt-0 mb-0">Posted</p>
+                    <p class="mt-0 mb-2 border-bottom">{{ prescription.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</p>
+                </blockquote>
+
+                <div class="row">
+                    <div class="col-lg-3" style="margin-bottom: 10px;">
+                        <a href="{{ url_for('patient.connectDoctorPrescription', storedName = prescription.prescriptionIdEncrypted) }}"
+                            style="margin-bottom: 20px;"
+                            class="btn btn-outline-info mb-0 container-fluid">Connect Doctor</a>
+                    </div>
+                    <div class="col-lg-3" style="margin-bottom: 10px;">
+                        <a href="{{ url_for('patient.disconnectDoctorPrescription', storedName = prescription.prescriptionIdEncrypted) }}"
+                            style="margin-bottom: 20px;"
+                            class="btn btn-outline-danger mb-0 container-fluid">Disconnect Doctor</a>
+                    </div>
+                    <div class="col-lg-3" style="margin-bottom: 10px;">
+                        <a href="{{ url_for('patient.authorizedPrescriptionViewers', storedName = prescription.prescriptionIdEncrypted) }}"
+                            style="margin-bottom: 20px;"
+                            class="btn btn-outline-info mb-0 container-fluid">Doctors who can see this</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-3" style="margin-bottom: 10px;">
+                        <a href="{{ url_for('patient.getPrescriptionAsPdf', storedName = prescription.prescriptionIdEncrypted) }}"
+                            style="margin-bottom: 20px;"
+                            class="btn btn-outline-info mb-0 container-fluid">Get Pdf</a>
+                    </div>
+                </div>
+
+                {% if prescription.description %}
+                    <h2 class="mt-4">{{ prescription.description }}</h2>
+                {% else %}
+                    <h2 class="text-muted">Description Unavailable</h2>
+                {% endif %}
+                <p>{{ prescription.material }}</p>
+            </article>
+        </div>
+    </div>
+{% endblock content %}

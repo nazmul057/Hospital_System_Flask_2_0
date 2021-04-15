@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        User Information
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <a href="{{ url_for('commonFunctions.showProfileImage', fileName=user.profileImage) }}">
+        <img class="rounded" src="{{ url_for('commonFunctions.showProfileImage', fileName=user.profileImage) }}">
+        </a>
+        <div class="media-body">
+          <h2 class="account-heading" style="margin-left: 30px">{{ userVariable.username }}</h2>
+          <p class="text-secondary" style="margin-left: 30px">{{ user.email }}</p>
+        </div>
+      </div>
+    </div>
+    <blockquote class="blockquote">
+        {% if userVariable.name %}
+            <p class="mb-0">Name: {{ userVariable.name }}</p>
+        {% else %}
+            <p class="text-secondary">Name: Unavailable</p>
+        {% endif %}
+
+        {% if user.userType == 'patient' %}
+            {% if userVariable.age %}
+                <p class="mb-0">Age: {{ userVariable.age }}</p>
+            {% else %}
+                <p class="text-secondary">Age: Unavailable</p>
+            {% endif %}
+        {% elif user.userType == 'hospitalStaff' %}
+            <p class="mb-0">Id From User Model: {{ userVariable.idFromUserModel }}</p>
+        {% elif user.userType == 'doctor' %}
+            {% if userVariable.field %}
+                <p class="mb-0">Field: {{ userVariable.field }}</p>
+            {% else %}
+                <p class="text-secondary">Field: Unavailable</p>
+            {% endif %}
+        {% elif user.userType == 'admin' %}
+            {% if userVariable.title %}
+                <p class="mb-0">Title: {{ userVariable.title }}</p>
+            {% else %}
+                <p class="text-secondary">Title: Unavailable</p>
+            {% endif %}
+        {% else %}
+            <p class="text-secondary">No Data Found</p>
+        {% endif %}
+    </blockquote>
+
+{% endblock content %}

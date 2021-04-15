@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Search Hospital Staff
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Search Hospital Staff</legend>
+            <div class="form-group">
+                {{ form.searchBy.label(class="form-control-label") }}
+                {% if form.searchBy.errors %}
+                    {{ form.searchBy(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.searchBy.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.searchBy(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.searchName.label(class="form-control-label") }}
+                {% if form.searchName.errors %}
+                    {{ form.searchName(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.searchName.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.searchName(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+    </form>
+    <hr>
+
+    {% if allData == [] %}
+        <h3 class="text-secondary">No Hospital Staff Found.</h3>
+    {% else %}
+        <table class="table table-bordered table-striped table-dark table-responsive-md">
+            <thead>
+                <tr>
+                    <th scope="col">Serial</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user, hospitalStaff in allData %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ hospitalStaff.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ hospitalStaff.name }}</td>
+                        <td><a class="btn btn-info hoverEffect"
+                            href="{{ url_for('admin.particularUserInfo', userType=user.userType, storedName=hospitalStaff.hospitalStaffIdEncrypted) }}">See Info</a></td>
+                        <td><a class="btn btn-danger hoverEffect"
+                            href="{{ url_for('admin.deleteUserConfirmation',
+                                userType=user.userType,
+                                storedName=hospitalStaff.hospitalStaffIdEncrypted) }}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Allowed doctors to see this Document
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    {% if referenceUserType == 'doctor' %}
+        <h3 class="text-primary mb-2">Reference Doctor</h3>
+        <div class="content-section mb-4">
+            <div class="media">
+                <a href="{{ url_for('commonFunctions.showProfileImage', fileName = referenceUserProfileImage) }}">
+                    <img class="rounded" src="{{ url_for('commonFunctions.showProfileImage', fileName = referenceUserProfileImage) }}">
+                </a>
+                <div class="media-body">
+                    <h4 class="account-heading mb-1" style="margin-left: 30px"> Username: {{ referenceUser.username }}</h4>
+                    <p class="text-secondary mb-1" style="margin-left: 30px">Name: {{ referenceUser.name }}</p>
+                </div>
+            </div>
+        </div>
+    {% elif referenceUserType == 'patient' %}
+        <h3 class="text-secondary">You have uploaded this file.</h3>
+    {% else %}
+        <h3 class="text-secondary"></h3>
+    {% endif %}
+
+    {% if allData == [] %}
+        <h5 class="text-muted">No other Doctor can see this</h5>
+    {% else %}
+        <h3 class="text-primary mb-3">Allowed (by you) Doctors to see this file</h3>
+        {% for profileImage, doctor in allData %}
+            <div class="content-section mb-4">
+                <div class="media">
+                    <a href="{{ url_for('commonFunctions.showProfileImage', fileName = profileImage) }}">
+                        <img class="rounded" src="{{ url_for('commonFunctions.showProfileImage', fileName = profileImage) }}">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="account-heading mb-1" style="margin-left: 30px"> Username: {{ doctor.username }}</h4>
+                        <p class="text-secondary mb-1" style="margin-left: 30px">Name: {{ doctor.name }}</p>
+                        <a href="{{ url_for('patient.directDisconnectDoctorDocument',
+                            storedDoctorName = doctor.doctorIdEncrypted,
+                            storedName = storedName) }}" class="btn btn-outline-danger mt-0 ml-4">
+                            Disallow
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

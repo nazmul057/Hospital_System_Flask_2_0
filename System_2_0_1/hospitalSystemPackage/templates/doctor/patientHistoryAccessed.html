@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Patient Accessed History
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    {% if type == 'prescription' %}
+        {% if prescriptions.items == [] %}
+            <h4 class="text-secondary">No Prescription available.</h4>
+        {% else %}
+            <table class="table table-bordered table-striped table-dark table-responsive-md">
+                <thead>
+                    <tr>
+                        <th scope="col">Serial</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for prescription in prescriptions.items %}
+                    <tr>
+                        <th scope="row">{{ loop.index + refCount }}</th>
+                        <td>{{ prescription.description }}</td>
+                        <td>{{ prescription.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</td>
+                        <td><a class="btn btn-info hoverEffect"
+                            href="{{ url_for('doctor.particularPrescription',
+                            storedName = prescription.prescriptionIdEncrypted) }}">See Prescription</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% for page_num in prescriptions.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+          {% if page_num %}
+            {% if prescriptions.page == page_num %}
+              <a class="btn btn-info mb-4" href="{{ url_for('doctor.patientAccessedPrescriptions',
+                    storedPatientName = patientIdEncrypted,
+                    page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+              <a class="btn btn-outline-info mb-4" href="{{ url_for('doctor.patientAccessedPrescriptions',
+                    storedPatientName = patientIdEncrypted,
+                    page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+
+    {% else %}
+        {% if documents.items == [] %}
+            <h4 class="text-secondary">No document available.</h4>
+        {% else %}
+            <table class="table table-bordered table-striped table-dark table-responsive-md">
+                <thead>
+                    <tr>
+                        <th scope="col">Serial</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Uploaded By</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for document in documents.items %}
+                    <tr>
+                        <th scope="row">{{ loop.index + refCount }}</th>
+                        <td>{{ document.description }}</td>
+                        <td>{{ document.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</td>
+                        <td>
+                            {% if document.postedBy and document.postedBy == 'patient' %}
+                                Patient
+                            {% elif document.postedBy and document.postedBy == 'hospitalStaff' %}
+                                Hospital
+                            {% elif document.postedBy and document.postedBy == 'doctor' %}
+                                Doctor
+                            {% else %}
+                                Unavailable
+                            {% endif %}
+                        </td>
+                        <td><a class="btn btn-info hoverEffect"
+                            href="{{ url_for('doctor.particularDocument',
+                            storedName = document.documentIdEncrypted) }}">See Document</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        {% for page_num in documents.iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+          {% if page_num %}
+            {% if documents.page == page_num %}
+              <a class="btn btn-info mb-4" href="{{ url_for('doctor.patientAccessedDocuments',
+                    storedPatientName = patientIdEncrypted,
+                    page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+              <a class="btn btn-outline-info mb-4" href="{{ url_for('doctor.patientAccessedDocuments',
+                    storedPatientName = patientIdEncrypted,
+                    page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+          {% else %}
+            ...
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Your Information
+    </h1>
+{% endblock jumbotronUp%}
+
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <a href="{{ url_for('commonFunctions.showProfileImage', fileName=current_user.profileImage) }}">
+        <img class="rounded" src="{{ url_for('commonFunctions.showProfileImage', fileName=current_user.profileImage) }}">
+        </a>
+        <div class="media-body">
+          <h2 class="account-heading" style="margin-left: 30px">{{ admin.username }}</h2>
+          <p class="text-secondary" style="margin-left: 30px">{{ current_user.email }}</p>
+        </div>
+      </div>
+    </div>
+    <blockquote class="blockquote">
+        {% if admin.name %}
+            <p class="mb-0">Name: {{ admin.name }}</p>
+        {% else %}
+            <p class="text-secondary">Name: Unavailable</p>
+        {% endif %}
+
+        {% if admin.title %}
+            <p class="mb-0">Age: {{ admin.title }}</p>
+        {% else %}
+            <p class="text-secondary">Title: Unavailable</p>
+        {% endif %}
+    </blockquote>
+    <div class="row">
+        <div class="col-3" style="margin-bottom: 10px;">
+            <a href="{{ url_for('admin.updateAdminInfo') }}"
+               class="btn btn-outline-info hoverEffect container-fluid"
+               role="button"
+               aria-pressed="true">Update Information</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" style="margin-bottom: 10px;">
+            <a href="{{ url_for('commonFunctions.updateProfileImage') }}"
+               class="btn btn-outline-info hoverEffect container-fluid"
+               role="button"
+               aria-pressed="true">Change Profile Picture</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" style="margin-bottom: 10px;">
+            <a href="{{ url_for('commonFunctions.changePassword') }}"
+               class="btn btn-outline-info hoverEffect container-fluid"
+               role="button"
+               aria-pressed="true">Change Password</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" style="margin-bottom: 10px;">
+            <a href="{{ url_for('admin.deleteAccountConfirmation') }}"
+               class="btn btn-outline-danger hoverEffect container-fluid"
+               style="margin-bottom : 10px;">Delete Account</a>
+        </div>
+    </div>
+
+{% endblock content %}

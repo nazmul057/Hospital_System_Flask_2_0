@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Are You Sure...???
+    </h1>
+{% endblock jumbotronUp %}
+
+{% block content %}
+    {% if confirmationAbout == 'document'  %}
+        <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+            <h1>Are You sure you want to delete?</h1>
+        </div>
+
+        <div class="d-flex justify-content-around" style="margin-bottom: 20px;">
+            <a href="{{ url_for('patient.deleteDocument',
+                storedName=storedName,
+                fromPage=fromPage,
+                itemNumber=itemNumber) }}"
+                class="btn btn-outline-danger">Yes, I am Sure.</a>
+
+            <a  onclick="history.back(-1)"
+                class="btn btn-outline-info"
+                style="color: #00525c;">No, I have Changed my mind.</a>
+        </div>
+        <hr>
+    {% elif confirmationAbout == 'prescription'  %}
+        <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+            <h1>Are You sure you want to delete?</h1>
+        </div>
+
+        <div class="d-flex justify-content-around" style="margin-bottom: 20px;">
+            <a href="{{ url_for('patient.deletePrescription',
+                storedName=storedName,
+                fromPage=fromPage,
+                itemNumber=itemNumber) }}"
+                class="btn btn-outline-danger">Yes, I am Sure.</a>
+
+            <a  onclick="history.back(-1)"
+                class="btn btn-outline-info"
+                style="color: #00525c;">No, I have Changed my mind.</a>
+        </div>
+        <hr>
+    {% elif confirmationAbout == 'account'  %}
+        <div class="d-flex justify-content-center" style="margin-bottom: 10px;">
+            <h1>Are You sure you want to delete Your Account?</h1>
+        </div>
+
+        <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+            <p class="lead">Your files and all other information will be removed.</p>
+        </div>
+
+        <div class="d-flex justify-content-around" style="margin-bottom: 20px;">
+            <a href="{{ url_for('patient.deleteAccount') }}"
+               class="btn btn-outline-danger">Yes, I am Sure.</a>
+
+            <a  onclick="history.back(-1)"
+                class="btn btn-outline-info"
+                style="color: #00525c;">No, I have Changed my mind.</a>
+        </div>
+        <hr>
+    {% elif confirmationAbout == 'doctorConnection'  %}
+        <div class="d-flex justify-content-center" style="margin-bottom: 10px;">
+            <h2>Are You sure you want to perform this action?</h2>
+        </div>
+
+        <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+            <p class="lead">{{ loadedText }}</p>
+        </div>
+
+        <div class="d-flex justify-content-around" style="margin-bottom: 20px;">
+            <a href="{{ url_for('patient.directDisconnectDoctor',
+                        storedDoctorName = storedDoctorName,
+                        fromPage = fromPage,
+                        itemNumber = itemNumber) }}"
+               class="btn btn-outline-danger">Yes, I am Sure.</a>
+
+            <a  onclick="history.back(-1)"
+                class="btn btn-outline-info"
+                style="color: #00525c;">No, I have Changed my mind.</a>
+        </div>
+        <hr>
+    {% else %}
+        <div class="d-flex justify-content-center" style="margin-bottom: 60px;">
+            <h1 class="display-4">We are not quite sure what you want to delete.</h1>
+        </div>
+    {% endif %}
+{% endblock content %}

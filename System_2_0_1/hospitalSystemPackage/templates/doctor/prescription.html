@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Prescription
+    </h1>
+{% endblock jumbotronUp %}
+
+{% block content %}
+    <div class="media">
+        <div class="media-body">
+            <article>
+                <blockquote class="blockquote">
+                    <h4 class="text-primary mt-0 mb-0">Prescription of</h4>
+                    <p class="mt-0 mb-0">Username: {{ patient.username }}</p>
+                    <p class="mt-0 mb-2 border-bottom">Name: {{ patient.name }}</p>
+
+                    {% if prescription.referenceDoctorName != None %}
+                        <h4 class="text-primary mt-0 mb-0">Prescription By</h4>
+                        <p class="mt-0 mb-2 border-bottom">{{ prescription.referenceDoctorName }}</p>
+                    {% else %}
+                        <h4 class="text-secondary mb-2">No reference doctor currently available.</h4>
+                    {% endif %}
+
+                    <p class="text-primary mt-0 mb-0">Posted</p>
+                    <p class="mt-0 mb-2 border-bottom">{{ prescription.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</p>
+
+                </blockquote>
+
+                {% if prescription.description %}
+                    <h2>{{ prescription.description }}</h2>
+                {% else %}
+                    <h2 class="text-muted">Description Unavailable</h2>
+                {% endif %}
+                <p>{{ prescription.material }}</p>
+            </article>
+      </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block jumbotronUp %}
+    <h1>
+        Patient Document
+    </h1>
+{% endblock jumbotronUp %}
+
+{% block content %}
+    <div class="media">
+        <div class="media-body">
+            <blockquote class="blockquote">
+                <h4 class="text-primary mt-0 mb-0">Document of</h4>
+                <p class="mt-0 mb-0">Username: {{ patient.username }}</p>
+                <p class="mt-0 mb-2 border-bottom">Name: {{ patient.name }}</p>
+
+                {% if document.referenceDoctorName != None %}
+                    <h4 class="text-primary mt-0 mb-0">Document By</h4>
+                    <p class="mt-0 mb-2 border-bottom">{{ document.referenceDoctorName }}</p>
+                {% else %}
+                    <h4 class="text-secondary">No reference doctor is available for this document.</h4>
+                {% endif %}
+
+                <p class="text-primary mt-0 mb-0">Posted</p>
+                <p class="mt-0 mb-3 border-bottom">{{ document.postDate.strftime('%d-%m-%Y at %I:%M %p') }}</p>
+
+                <h4 class="text-primary mt-0 mb-0">Description</h4>
+                {% if document.description %}
+                    <p class="mt-0 mb-2">{{ document.description }}</p>
+                {% else %}
+                    <P class="mt-0 mb-2 text-muted">Unavailable</P>
+                {% endif %}
+
+            </blockquote>
+
+            {% if fExt == '.pdf' %}
+                <a href="{{ url_for('doctor.seeFile', storedName=document.documentIdEncrypted) }}"
+                   class="btn btn-outline-info" role="button"
+                   style="margin-bottom: 20px;"
+                   aria-pressed="true">Full Screen</a>
+                <iframe src="{{ url_for('doctor.seeFile', storedName=document.documentIdEncrypted) }}" style="width: 100%;height: 700px;border: none;"></iframe>
+            {% else %}
+                <a href="{{ url_for('doctor.seeFile', storedName=document.documentIdEncrypted) }}">
+                    <img src="{{ url_for('doctor.seeFile', storedName=document.documentIdEncrypted) }}" style="width: 100%;">
+                </a>
+            {% endif %}
+      </div>
+    </div>
+{% endblock content %}
